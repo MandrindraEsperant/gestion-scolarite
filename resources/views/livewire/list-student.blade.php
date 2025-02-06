@@ -15,7 +15,7 @@
             {{-- Message aprés opération --}}
 
             @if (Session::get('success'))
-                <div lass="p-2 mt-2 text-white bg-green-500 rounded shadow-sm bloc animate-bounce">
+                <div class="p-2 mt-2 text-white bg-green-500 rounded shadow-sm bloc animate-bounce">
                     {{ Session::get('success') }}
                 </div>
             @endif
@@ -27,36 +27,42 @@
                         <table class="min-w-full text-center">
                             <thead class="border-b bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Id</th>
                                     <th class="px-6 py-4 text-sm font-medium text-gray-900">Matricule</th>
                                     <th class="px-6 py-4 text-sm font-medium text-gray-900">Nom</th>
                                     <th class="px-6 py-4 text-sm font-medium text-gray-900">Prénoms</th>
-                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Contact</th>
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Sexe</th>
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Date de naissance</th>
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Adresse</th>
                                     <th class="px-6 py-4 text-sm font-medium text-gray-900">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($students as $item)
                                     <tr class="border-b-2 border-gray-100">
-                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->id }}</td>
                                         <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->matricule }}
                                         </td>
                                         <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->nom }}
                                         </td>
                                         <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->prenom }}</td>
-                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->contact_parent }}</td>
-                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">
-                                            <a href="{{ route('niveau.edit_level', $item->id) }}"
-                                                class="px-2 py-1 text-sm text-gray-200 bg-blue-500 rounded">Modifier</a>
-                                            <span class="px-2 py-1 text-sm text-gray-200 bg-red-500 rounded" wire:click="delete({{$item->id}})">Supprimer</span>
-                                            <a href="{{ route('classe', $item->libelle) }}"
-                                                class="px-2 py-1 text-sm text-gray-200 bg-green-500 rounded">Voir classe</a>
-                                               
-                                        </td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->sexe=='M' ?"Masculin": "Féminin" }}</td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->date_naissance }}</td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->adresse }}</td>
+                                        <td class="flex justify-center gap-2 px-6 py-4 text-sm font-medium text-gray-900">
+                                            <a href="{{route('student.edit',$item->id)}}">
+                                                <x-heroicon-o-pencil-square
+                                                class="text-blue-500 transition duration-500 rounded cursor-pointer hover:p-1 h-7 w-7 hover:bg-blue-600 hover:text-white" />
+                                            </a>
+                                            <a href="">
+                                                <x-heroicon-o-trash
+                                                class="text-red-500 transition duration-500 rounded cursor-pointer hover:p-1 h-7 w-7 hover:bg-red-600 hover:text-white"
+                                                wire:click="delete({{ $item->id }})" />
+                                            </a>                                            
+                                        </td>  
+                                      
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="7">
                                             <div class="flex justify-center itemes-center">
                                                 <img src="{{ asset('storage/empty.svg') }}" alt="no data"
                                                     class="w-20 h-20 ">

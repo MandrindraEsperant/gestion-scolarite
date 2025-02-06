@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Level;
+use App\Models\Niveau;
 use Exception;
 use Livewire\Component;
 
@@ -10,46 +11,42 @@ class EditLevel extends Component
 {
     public $level;
 
-    public $code;
-    public $libelle;
-    public $scolarite;
+    public $niveau;
+    public $prix_ecolage;
+    public $prix_droit;
 
     public function mount(){
-        $this->code =$this->level->code;
-        $this->libelle =$this->level->libelle;
-        $this->scolarite =$this->level->scolarite;
+        $this->niveau =$this->level->niveau;
+        $this->prix_ecolage =$this->level->prix_ecolage;
+        $this->prix_droit =$this->level->prix_droit;
     }
 
     public function store()
     {
-        $level = Level::find($this->level->id);
+        $level = Niveau::find($this->level->id);
 
         $this->validate([
-            'code' => 'string|required', // comparer code dans le table levels pour être unique
-            'libelle' => 'string|required',
-            'scolarite' => 'integer|required'
+            'niveau' => 'string|required',
+            'prix_ecolage' => 'required',
         ]);
 
         try {
-            $level->code = $this->code;
-            $level->libelle = $this->libelle;
-            $level->scolarite = $this->scolarite;
-
+            $level->niveau = $this->niveau;
+            $level->prix_ecolage = $this->prix_ecolage;
+            $level->prix_droit = $this->prix_droit;
             $level->update();
 
-            if ($level) {
-                $this->code = "";
-                $this->libelle = "";
-            }
-            return redirect()->route('niveau')->with("success", "niveau mis à jour");
+            session()->flash('success', 'Niveau mis à jour!');
+
+            $this->reset(['niveau', 'prix_ecolage']);
+            return to_route('level');
         } catch (Exception $e) {
-            dd($e);
+            session()->flash('error', 'Une erreur est survenue. Vérifiez vos données. :' . $e->getMessage());
         }
     }
 
     public function render()
     {
-
         return view('livewire.edit-level');
     }
 }

@@ -3,40 +3,42 @@
         <form action="" method="post" wire:submit.prevent="store">
             @csrf
             @method('post')
-            @if (Session::get('error'))
+            @if (session()->has('error'))
                 <div class="p-4 bg-red-100 border-red-500 animate-bounce">{{ Session::get('error') }}</div>
             @endif
             <div class="p-5">
                 <div class="block mb-5">
-                    <label for="code">Code <span class="text-red-700 font-lgbold text-">*</span> </label>
-                    <input type="text" name="code" id="code"
+                    <label for="niveau">Niveau<span class="text-red-700 font-lgbold text-">*</span> </label>
+                    <input type="text" name="niveau" id="niveau"
                         class="block w-full mt-1 border-gray-300 rounded @error('libelle') border-red-500 bg-red-100 animate-bounce @enderror"
-                        wire:model='code'>
+                        wire:model='niveau'>
 
-                    @error('code')
+                    @error('niveau')
                         <div class="mt-1 text-red-500">{{$message}}</div>
                     @enderror
                 </div>
                 <div class="block mb-5">
-                    <label for="libelle">Libelle du niveau <span
+                    <label for="prix_droit">Frais d'inscription en (Ariary) <span
                             class="text-red-700 font-lgbold text-">*</span></label>
-                    <input type="text" name="libelle" id="libelle"
+                    <input type="number" name="prix_droit" id="prix_droit" required
+                    min="0" 
                         class="block w-full mt-1 border-gray-300 rounded @error('libelle') border-red-500 bg-red-100 animate-bounce @enderror"
-                        wire:model='libelle'>
+                        wire:model='prix_droit'>
 
-                    @error('libelle')
-                        <div class="mt-1 text-red-500">* Le champs libelle est requis</div>
+                    @error('prix_doit')
+                        <div class="mt-1 text-red-500">* Le champs frais d'inscription est requis</div>
                     @enderror
                 </div>
                 <div class="block mb-5">
-                    <label for="scolarite">Montant scolaire en (Ariary) <span
+                    <label for="prix_ecolage">Prix d'écolage en (Ariary) <span
                             class="text-red-700 font-lgbold text-">*</span></label>
-                    <input type="number" name="scolarite" id="scolarite"
+                    <input type="number" name="prix_ecolage" id="prix_ecolage"
+                    min="0" minlength="4"
                         class="block w-full mt-1 border-gray-300 rounded @error('libelle') border-red-500 bg-red-100 animate-bounce @enderror"
-                        wire:model='scolarite'>
+                        wire:model='prix_ecolage'>
 
-                    @error('scolarite')
-                        <div class="mt-1 text-red-500">* Le champs montant scolaire est requis</div>
+                    @error('prix_ecolage')
+                        <div class="mt-1 text-red-500">* Le champs prix d'écolage est requis</div>
                     @enderror
                 </div>
             </div>

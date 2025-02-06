@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('school_years', function (Blueprint $table) {
+        Schema::create('annee_scolaires', function (Blueprint $table) {
             $table->id();
-            $table->string('school_year');
-            $table->string('current_year');
-            $table->enum('active',[0, 1])->default(0);
+            $table->string("annee_scolaire",9)->unique()->nullable(false);
+            $table->enum("active",[0,1])->default(0);
+            $table->date('debut')->nullable(false);
+            $table->date('fin')->nullable(false);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('school_years');
+        Schema::dropIfExists('annee_scolaires');
     }
 };

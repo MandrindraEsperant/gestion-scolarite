@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Etudiant;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class StudentController extends Controller
         return view('student.show', compact('student'));
     }
 
-    public function edit(Student $student){
+    public function edit(Etudiant $student){
         return view('student.edit',compact('student'));
     }
 }

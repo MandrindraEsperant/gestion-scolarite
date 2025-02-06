@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classe;
 use App\Models\Level;
+use App\Models\Niveau;
 use Illuminate\Http\Request;
 
 class LevelController extends Controller
@@ -18,7 +19,7 @@ class LevelController extends Controller
         return view('niveau.create');
     }
 
-    public function edit(Level $level)
+    public function edit(Niveau $level)
     {
         return view('niveau.edit', compact('level'));
     }

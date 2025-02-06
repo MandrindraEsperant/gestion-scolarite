@@ -5,9 +5,9 @@
 
             <input type="text" class="block mt-1 border-gray-300 rounded" placeholder="Rechercher" wire:model="search"
                 wire:poll>
-            <a href="{{ route('level.create_level') }}"
+            <a href="{{ route('student.create') }}"
                 class="px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                Ajouter un nouveau niveau
+                Ajouter élève
             </a>
         </div>
 
@@ -27,30 +27,31 @@
                         <table class="min-w-full text-center">
                             <thead class="border-b bg-gray-50">
                                 <tr>
-                                    {{-- <th class="px-6 py-4 text-sm font-medium text-gray-900">Id</th> --}}
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Matricule</th>
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Nom</th>
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Prénom(s)</th>
                                     <th class="px-6 py-4 text-sm font-medium text-gray-900">Niveau</th>
-                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Frais d'inscription</th>
-                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Prix d'écolage</th>
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Statut</th>
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Mode de payement</th>
+                                    <th class="px-6 py-4 text-sm font-medium text-gray-900">Date d'inscription</th>
                                     <th class="px-6 py-4 text-sm font-medium text-gray-900">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($levels as $item)
+                                @forelse ($inscriptions as $item)
                                     <tr class="border-b-2 border-gray-100">
-                                        {{-- <td class="px-6 py-4 text-sm font-medium text-gray-900">
-                                            {{ $item->id }}
-                                        </td> --}}
-                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">
-                                            {{ $item->niveau }}
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->matricule }}
                                         </td>
-                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">
-                                            {{ $item->prix_droit }} ariary
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->nom }}
                                         </td>
-                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">
-                                            {{ $item->prix_ecolage }} ariary
-                                        </td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->prenom }}</td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->niveau }}</td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->statut }}</td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->prix_droit}}</td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->mode_payement }}</td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->date_inscription }}</td>
                                         <td class="flex justify-center gap-2 px-6 py-4 text-sm font-medium text-gray-900">
-                                            <a href="{{route('level.edit_level',$item->id)}}">
+                                            <a href="{{route('student.edit',$item->id)}}">
                                                 <x-heroicon-o-pencil-square
                                                 class="text-blue-500 transition duration-500 rounded cursor-pointer hover:p-1 h-7 w-7 hover:bg-blue-600 hover:text-white" />
                                             </a>
@@ -59,11 +60,12 @@
                                                 class="text-red-500 transition duration-500 rounded cursor-pointer hover:p-1 h-7 w-7 hover:bg-red-600 hover:text-white"
                                                 wire:click="delete({{ $item->id }})" />
                                             </a>                                            
-                                        </td>                                     
+                                        </td>  
+                                        
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="7">
                                             <div class="flex justify-center itemes-center">
                                                 <img src="{{ asset('storage/empty.svg') }}" alt="no data"
                                                     class="w-20 h-20 ">
@@ -82,7 +84,7 @@
 
             {{-- Pagination --}}
             <div class="mt-2 ">
-                {{ $levels == [] ? null : $levels->links() }}
+                {{ $inscriptions->links() }}
             </div>
 
 

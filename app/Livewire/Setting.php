@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\SchoolYear;
+use App\Models\AnneeScolaire;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,8 +12,8 @@ class Setting extends Component
 
     public $search = '';
 
-    public function toggleStatus(SchoolYear $schoolYear){
-        $query = SchoolYear::where('active','1')->update(['active'=>'0']);
+    public function toggleStatus(AnneeScolaire $schoolYear){
+        $query = AnneeScolaire::where('active','1')->update(['active'=>'0']);
         $schoolYear->active='1';
         $schoolYear->save();
         $this->render();
@@ -21,10 +21,10 @@ class Setting extends Component
   
     public function render()
     {
-        $query = SchoolYear::query()->orderBy('school_year', 'desc');
+        $query = AnneeScolaire::query()->orderBy('annee_scolaire', 'desc');
 
         if (!empty($this->search)) {
-            $query->where('school_year', 'like', '%' . $this->search . '%');
+            $query->where('annee_scolaire', 'like', '%' . $this->search . '%');
         }
     
         // Pagination par Livewire

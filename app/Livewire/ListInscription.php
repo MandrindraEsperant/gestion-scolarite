@@ -2,27 +2,23 @@
 
 namespace App\Livewire;
 
-use App\Models\Etudiant;
-use App\Models\Student;
+use App\Models\Inscription;
 use Livewire\Component;
-use Livewire\WithPagination;
 
-class ListStudent extends Component
+class ListInscription extends Component
 {
-    use WithPagination;
-
     public $search = '';
- 
-    public function delete(Etudiant $student)
+
+    public function delete(Inscription $inscription)
     {
-        $student->delete();
-        session()->flash("success", "Un étudiant supprimer !");
-        return to_route('student');
+        $inscription->delete();
+        session()->flash("success", "Une inscription supprimer !");
+        return to_route('inscription');
     }
 
     public function render()
     {
-        $query = Etudiant::query();
+        $query = Inscription::query();
 
         if (!empty($this->search)) {
 
@@ -34,7 +30,7 @@ class ListStudent extends Component
         }
 
         // Pagination par Livewire
-        $students = $query->paginate(3);
-        return view('livewire.list-student', compact('students'));
+        $inscriptions = $query->paginate(3);
+        return view('livewire.list-inscription',compact('inscriptions'));
     }
 }

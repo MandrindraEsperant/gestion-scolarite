@@ -4,7 +4,7 @@
             {{ __('Modification d\'un niveau') }}
         </h2>
     </x-slot>
-
+ 
     <div class="px-2 py-2">
         <livewire:edit-level :level="$level"/>
     </div>
